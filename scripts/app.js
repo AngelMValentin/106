@@ -63,10 +63,32 @@ function testRequest() {
     });
 }
 
+function loadTask() {
+    $.ajax({
+        type: "get",
+        url: "http://fsdiapi.azurewebsites.net/api/tasks",
+
+        success: function(response) {
+            console.log(response);
+            let data = JSON.parse(response);
+            for (let i = 0; i<data.length; i++) {
+                let task = data[i];
+                if (task.name === "Angel53") {
+                    displayTask(task);
+                }
+            }
+            console.log(data);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    })
+}
 
 function init() {
     console.log("task manager");
     // load data
+    loadTask();
 
     // hook the events 
     $("#btnSave").click(saveTask);
